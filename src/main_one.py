@@ -4,16 +4,15 @@ import pandas as pd
 import os
 #Name: numpy
 #Version: 2.2.6
-
 # Get the abs path
 file_name = "static" 
 absolute_path = os.path.abspath(file_name);
 video_path = absolute_path+"/IMG_0530.mp4";
-
 # 加载YOLOv8模型（自动下载预训练权重）
 model = YOLO("yolov8n.pt")  # 轻量级模型，可选yolov8s/m/l/x
 
 # 打开视频文件
+
 cap = cv2.VideoCapture(video_path)
 
 # 获取视频的FPS（帧率）和总帧数
@@ -51,18 +50,12 @@ if person_appearances:
             start_time = time
         prev_time = time
     time_windows.append((start_time, prev_time))  # 添加最后一个区间
+
 # 输出结果
 print("人物出现的时间区间（秒）：")
 for start, end in time_windows:
-    if start < 60 and end < 60:
-        print(f"{start:.2f} - {end:.2f} +secend")
-    elif start < 60 and end > 60:
-        print(f"{start:.2f} + secend - {end/60:.2f}+minute")
-    elif start > 60 and end > 60 :
-        print(f"{start/60:.2f} - {end/60:.2f} + minute")
-    elif start > 3600 and end > 3600 :
-        print(f"{start/3600:.2f} - {end/3600:.2f} + hour")
-    
+    print(f"{start:.2f} - {end:.2f}")
+
 # 可选：保存到CSV
 df = pd.DataFrame(time_windows, columns=["Start Time (s)", "End Time (s)"])
 df.to_csv("person_appearances.csv", index=False)
