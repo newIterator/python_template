@@ -3,7 +3,6 @@ from ultralytics import YOLO
 import pandas as pd
 import os
 from get_person_step import createPic
-from read_select_folder import select_folder_and_list_files
 #Name: numpy
 #Version: 2.2.6
 
