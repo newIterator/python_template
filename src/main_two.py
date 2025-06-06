@@ -2,7 +2,6 @@ import cv2
 from ultralytics import YOLO
 import pandas as pd
 import os
-from get_person_step import createPic
 #Name: numpy
 #Version: 2.2.6
 
@@ -10,8 +9,7 @@ from get_person_step import createPic
 file_name = "static" 
 absolute_path = os.path.abspath(file_name);
 video_path = absolute_path+"/IMG_0530.mp4";
-# output file save of folder
-output_dir = absolute_path+"/source";
+
 # 加载YOLOv8模型（自动下载预训练权重）
 model = YOLO("yolov8n.pt")  # 轻量级模型，可选yolov8s/m/l/x
 
@@ -38,7 +36,6 @@ for frame_idx in range(total_frames):
     if len(results[0].boxes) > 0:  # 检测到至少一个人
         current_time = frame_idx / fps  # 当前时间（秒）
         person_appearances.append(current_time)
-        createPic(output_dir,f"person_{current_time}.jpg",frame)
 
 cap.release()
 
