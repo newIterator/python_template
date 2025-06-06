@@ -1,9 +1,10 @@
 # use the python to write front API
 
 ## one、create env
-> first、cd your project folder
+
+> first、 the moused move on target folder,click right key or use two fingers click laptops control block,when the selects show,select create new terminal
 >
-> second、use the moused move on target folder,click right key or use two fingers click laptops control block,when the selects show,select create new terminal
+> second、cd your project folder
 >
 > three、init your project folder
 ```
