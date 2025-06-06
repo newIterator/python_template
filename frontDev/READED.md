@@ -2,18 +2,23 @@
 
 ## one、create env
 > first、cd your project folder
+>
 > second、use the moused move on target folder,click right key or use two fingers click laptops control block,when the selects show,select create new terminal
+>
 > three、init your project folder
 ```
 python3 -m venv venv  
 ```
+
 > four、 install need dependence of package in the venv
 ```
 pip uninstall fastapi uvicorn
 
 ```
+
 > five、create the .py file to write needs of front dev API
 >> first、create the file of name is "main.py "
+
 >> second、start write
 ```
 from fastapi import FastAPI, HTTPException
@@ -46,6 +51,7 @@ uvicorn main:app --reload
 
 # answer the cors question
 > first、import CORSMiddleware methods into main.py from "fastapi.middleware.cors"
+>
 > second、write the about config, open the main.py
 
 ``` other code watch up example of main.py
@@ -64,5 +70,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 ```
+# Fastapi
+
+> [fastapi官方地址](https://fastapi.tiangolo.com/tutorial/sql-databases/#create-a-hero)
 
 
