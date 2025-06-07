@@ -47,7 +47,7 @@ input_video = absolute_path+"/IMG_0530.mp4";
 # 输出图片的目录
 output_dir = absolute_path+"/source";
 
-extract_person_frames(input_video,output_dir)
+# extract_person_frames(input_video,output_dir)
 
 # create .jpg or .mp4 or other type file
 def createPic(output_dir,file_name,frame):

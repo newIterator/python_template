@@ -3,20 +3,13 @@ from ultralytics import YOLO
 import pandas as pd
 import os
 from get_person_step import createPic
-#Name: numpy
-#Version: 2.2.6
-
-file_name = "static" 
-absolute_path = os.path.abspath(file_name);
-video_path = absolute_path+"/IMG_0530.mp4";
-# output file save of folder
-output_dir = absolute_path+"/source";
 
 # Get the abs path
 def analysisVideo(video_path,output_dir):
+    if not video_path : 
+        return 
     # 加载YOLOv8模型（自动下载预训练权重）
     model = YOLO("yolov8n.pt")  # 轻量级模型，可选yolov8s/m/l/x
-
     # 打开视频文件
     cap = cv2.VideoCapture(video_path)
 
@@ -24,10 +17,11 @@ def analysisVideo(video_path,output_dir):
     fps = cap.get(cv2.CAP_PROP_FPS)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    # 存储人物出现的时间节点
+    #存储人物出现的时间节点
     person_appearances = []
-
-    # 逐帧处理
+    current_time = 0
+    frame = ""
+    #逐帧处理
     for frame_idx in range(total_frames):
         ret, frame = cap.read()
         if not ret:
@@ -40,8 +34,7 @@ def analysisVideo(video_path,output_dir):
         if len(results[0].boxes) > 0:  # 检测到至少一个人
             current_time = frame_idx / fps  # 当前时间（秒）
             person_appearances.append(current_time)
-            createPic(output_dir,f"person_{current_time}.jpg",frame)
-
+            createPic(output_dir,f"person_{current_time:.2f}.jpg",frame)
     cap.release()
 
     # 合并连续的时间点，生成时间区间
@@ -59,15 +52,16 @@ def analysisVideo(video_path,output_dir):
     # 输出结果
     print("人物出现的时间区间（秒）：")
     for start, end in time_windows:
-        if start < 60 and end < 60:
-            print(f"{start:.2f} - {end:.2f} +secend")
-        elif start < 60 and end > 60:
-            print(f"{start:.2f} + secend - {end/60:.2f}+minute")
-        elif start > 60 and end > 60 :
-            print(f"{start/60:.2f} - {end/60:.2f} + minute")
-        elif start > 3600 and end > 3600 :
-            print(f"{start/3600:.2f} - {end/3600:.2f} + hour")
+        print(f"{start:.2f} - {end:.2f}")
+        # if start < 60 and end < 60:
+        #     print(f"{start:.2f} - {end:.2f} +secend")
+        # elif start < 60 and end > 60:
+        #     print(f"{start:.2f} + secend - {end/60:.2f}+minute")
+        # elif start > 60 and end > 60 :
+        #     print(f"{start/60:.2f} - {end/60:.2f} + minute")
+        # elif start > 3600 and end > 3600 :
+        #     print(f"{start/3600:.2f} - {end/3600:.2f} + hour")
     # 可选：保存到CSV
     df = pd.DataFrame(time_windows, columns=["Start Time (s)", "End Time (s)"])
-    df.to_csv(f"person_appearances.csv", index=False)
+    df.to_csv(f"{output_dir}_time_second.csv", index=False)
 

@@ -1,5 +1,6 @@
 import os
 from tkinter import Tk, filedialog
+from main import analysisVideo
 
 def select_folder_and_list_files():
     """
@@ -17,19 +18,22 @@ def select_folder_and_list_files():
 
     # 列出文件夹内所有文件
     all_files = []
-    for root_dir, _, files in os.walk(folder_path):
-        print(f"{files}")
+    all_file_name = []
+    for root_dir, dirs, files in os.walk(folder_path):
         for file in files:
+            # print(f"{file.split('.',1)}")
+            file_name = file.split('.',1)[0]
             file_path = os.path.join(root_dir, file)
             all_files.append(file_path)
+            all_file_name.append(file_name)
 
     # 打印结果
-    print(f"文件夹路径: {folder_path}")
-    print("文件列表:")
-    for file in all_files:
-        print(f"{file}")
-
-    return all_files
+    # print(f"文件夹路径: {folder_path}")
+    # print("文件列表:")
+    for index, path in enumerate(all_files):
+        our_file = folder_path+"/"+all_file_name[index]
+        index_file_name = all_file_name[index]
+    return all_files,all_file_name,folder_path
 
 # 调用函数
-files = select_folder_and_list_files()
+# files = select_folder_and_list_files()
